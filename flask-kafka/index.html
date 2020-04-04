@@ -1,0 +1,43 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            var socket = io.connect('http://localhost:80/kafka');
+
+            socket.on('kafkaconsumer1', function(msg) {
+                $('#consumer').html("")
+            });
+            socket.on('kafkaconsumer', function(msg) {
+                $('#consumer').append('<br>' + $('<div/>').text(msg.data).html());
+            });
+
+            socket.on('kafkaproducer', function(msg) {
+                $('#producer').append('<br>' + $('<div/>').text(msg.data).html());
+            });
+
+            socket.on('logs', function(msg) {
+                $('#log').append('<br>' + $('<div/>').text(msg.data).html());
+            });
+
+            $('form#emit').submit(function(event) {
+                socket.emit('kafkaproducer', $('#emit_data').val());
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+<form id="emit" method="POST" action='#'>
+    <input type="text" name="emit_data" id="emit_data" placeholder="Message">
+    <input type="submit" value="Echo">
+</form>
+<h2>Logs</h2>
+<div id="log"></div>
+<h2>Producer</h2>
+<div id="producer"></div>
+<h2>Consumer</h2>
+<div id="consumer"></div>
+</body>
+</html>

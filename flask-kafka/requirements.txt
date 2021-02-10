@@ -1,4 +1,4 @@
-Flask
-flask_cors
-kafka-python
-Flask-SocketIO
+Flask==1.1.1
+flask_cors==3.0.7
+kafka-python==2.0.1
+Flask-SocketIO==4.2.1

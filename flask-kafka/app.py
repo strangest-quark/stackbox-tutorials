@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import jsonify
+from flask import Flask, send_from_directory
 from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO, emit
 from kafka import KafkaProducer, KafkaConsumer, TopicPartition
@@ -10,14 +9,14 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-BOOTSTRAP_SERVERS = 'localhost:32770'
+BOOTSTRAP_SERVERS = 'kafka:9092'
 TOPIC_NAME = 'stackbox'
 
 
 @app.route('/')
 @cross_origin()
 def home():
-    return 'Flask is running!'
+    return send_from_directory('/app', "index.html")
 
 """ Kafka endpoints """
 

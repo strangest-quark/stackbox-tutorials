@@ -1,0 +1,7 @@
+{
+  "name": "image-filler",
+  "id": "968152889028711929",
+  "api": "1.0.0",
+  "main": "build/main.js",
+  "ui": "build/ui.html"
+}
